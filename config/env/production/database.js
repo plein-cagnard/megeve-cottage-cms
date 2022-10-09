@@ -1,19 +1,13 @@
-const parse = require('pg-connection-string').parse;
-const config = parse(process.env.DATABASE_URL);
-
 module.exports = ({ env }) => ({
   connection: {
-    client: 'postgres',
+    client: 'mysql',
     connection: {
-      host: config.host,
-      port: config.port,
-      database: config.database,
-      user: config.user,
-      password: config.password,
-      ssl: {
-        rejectUnauthorized: false
-      },
+      host: env('DATABASE_HOST', 'localhost'),
+      port: env.int('DATABASE_PORT', 3306),
+      database: env('DATABASE_NAME', 'tqnc1114_megeve-cottage'),
+      user: env('DATABASE_USERNAME', 'tqnc1114_react-live'),
+      password: env('DATABASE_PASSWORD', 'iAjneWF6LqH3AZBaTcBRtSN9vmSaEi6NSgsXxfynfBBAAV5zMY'),
+      ssl: env.bool('DATABASE_SSL', false),
     },
-    debug: false,
   },
 });
