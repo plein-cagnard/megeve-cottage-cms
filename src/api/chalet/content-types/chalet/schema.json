@@ -64,19 +64,6 @@
         }
       }
     },
-    "Fields": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "enumeration",
-      "enum": [
-        "Home",
-        "News",
-        "Contact"
-      ]
-    },
     "localisation": {
       "pluginOptions": {
         "i18n": {
