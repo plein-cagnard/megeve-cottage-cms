@@ -103,13 +103,14 @@
       "type": "integer",
       "default": 0
     },
-    "description_mobile": {
+    "short_description": {
       "type": "string",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "maxLength": 170
     }
   }
 }
