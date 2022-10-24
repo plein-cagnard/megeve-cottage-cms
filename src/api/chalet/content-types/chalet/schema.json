@@ -78,9 +78,7 @@
       "required": false,
       "allowedTypes": [
         "images",
-        "files",
-        "videos",
-        "audios"
+        "videos"
       ],
       "pluginOptions": {
         "i18n": {
@@ -104,6 +102,14 @@
       },
       "type": "integer",
       "default": 0
+    },
+    "description_mobile": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }
