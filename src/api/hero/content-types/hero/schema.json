@@ -44,6 +44,15 @@
           "localized": true
         }
       }
+    },
+    "scroll_down": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "maxLength": 25
     }
   }
 }
