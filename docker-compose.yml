@@ -2,23 +2,15 @@ version: '3.1'
 
 services:
 
-  mysql:
-    image: mysql
-    command: mysqld --default-authentication-plugin=mysql_native_password
-    volumes:
-      - ./data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: strapi
-      MYSQL_DATABASE: strapi
-      MYSQL_USER: strapi
-      MYSQL_PASSWORD: strapi
-
   strapi:
     container_name: megeve-cottage-api
-    image: strapi/strapi
+    build:
+      context: ./
+      dockerfile: Dockerfile
     environment:
+      NODE_ENV: production
       DATABASE_CLIENT: mysql
-      DATABASE_HOST: mysql
+      DATABASE_HOST: megeve-cottage-db
       DATABASE_PORT: 3306
       DATABASE_NAME: strapi
       DATABASE_USERNAME: strapi
@@ -36,14 +28,40 @@ services:
       - traefik.http.routers.MEGEVE_COTTAGE_API-Https.tls=true
       - traefik.http.routers.MEGEVE_COTTAGE_API-Https.tls.certresolver=letsencrypt
     networks:
-      - reverse-proxy
+      - strapi
     volumes:
       - ./app:/srv/app
     ports:
       - '1337:1337'
     depends_on:
-      - mysql
+      - megeve-cottage-db
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  megeve-cottage-db:
+    image: mysql:5.7
+    container_name: megeve-cottage-db
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: 'strapi'
+      MYSQL_USER: 'strapi'
+      MYSQL_PASSWORD: 'strapi'
+      MYSQL_ROOT_PASSWORD: 'strapi'
+    ports:
+      - '3306:3306'
+    volumes:
+      - strapi-data:/var/lib/mysql
+    networks:
+      - strapi
+
+volumes:
+  strapi-data:
 
 networks:
-  reverse-proxy:
-    external: true
+  strapi:
+    driver: bridge
