@@ -26,6 +26,7 @@ services:
       DATABASE_SSL: 'false'
     labels:
       - traefik.enable=true
+      - traefik.http.services.MEGEVE_COTTAGE.loadbalancer.server.port=1337
       - traefik.http.routers.MEGEVE_COTTAGE_API.rule=Host(`api.megeve-cottage.com`)
       - traefik.http.routers.MEGEVE_COTTAGE_API.entrypoints=http
       - traefik.http.routers.MEGEVE_COTTAGE_API.middlewares=https-redirect@file
