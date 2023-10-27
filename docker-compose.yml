@@ -24,6 +24,18 @@ services:
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi
       DATABASE_SSL: 'false'
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.MEGEVE_COTTAGE_API.rule=Host(`api.megeve-cottage.com`)
+      - traefik.http.routers.MEGEVE_COTTAGE_API.entrypoints=http
+      - traefik.http.routers.MEGEVE_COTTAGE_API.middlewares=https-redirect@file
+      - traefik.http.routers.MEGEVE_COTTAGE_API-Https.rule=Host(`api.megeve-cottage.com`)
+      - traefik.http.routers.MEGEVE_COTTAGE_API-Https.entrypoints=https
+      - traefik.http.routers.MEGEVE_COTTAGE_API-Https.middlewares=security@file, compression@file
+      - traefik.http.routers.MEGEVE_COTTAGE_API-Https.tls=true
+      - traefik.http.routers.MEGEVE_COTTAGE_API-Https.tls.certresolver=letsencrypt
+    networks:
+      - reverse-proxy
     volumes:
       - ./app:/srv/app
     ports:
